@@ -52,4 +52,48 @@ Example Usage 2:
   <img src="http://nimishprabhu.com/wp-content/uploads/2017/08/Parameter-details-700x238.png" width="700"/>
 </p>
 
- 
+ Description:
+clearzombies is a command line utility which takes necessary inputs and performs web calls to login to Server Manager, access process details page for provided enterprise server, determine if there are any zombie processes and if found, it sends a payload request to Server Manager’s ajax handler servlet, which clears the zombie process.
+
+Note:
+Ensure that ESHostname, ESInstanceName and JDEInstallPath are exactly as registered in Server Manager. These details can be obtained from Server Manager Dashboard page and you are advised to copy paste it from there instead of typing, to avoid human error.
+
+Following is a screenshot of functioning of clearzombies utility:
+
+
+<p align="center">
+  <img src="http://nimishprabhu.com/wp-content/uploads/2017/08/clear-zombie-jde-utility-700x188.jpg" width="700"/>
+</p>
+
+If you have multiple enterprise servers, save commands for each server, one server per line, in a batch file (copy the command with full path to a text file and save it with .bat extension) and schedule batch file to run, say for example, every 1 hour. Follow this link to know how to schedule a task in windows task scheduler, second half of the article describes scheduling a program/script.
+
+Following is an example of batch script for 2 servers, it can be modified for any number of servers:
+
+	1	@echo off
+	2	REM Set the path in which clearzombies.exe has been placed
+	3	SET dirpath="C:\CNC_Tools\ClearZombies"
+	4	cd %dirpath%
+	5	
+	6	REM Initialize variables
+	7	SET SVMHost="JDEDEPSVR"
+	8	SET SVMPort="8999"
+	9	SET SVMUserID="jde_admin"
+	10	SET SVMPasswordEncrypted="6pNmxcl6jImEn0aD81KYPNi4NyEG5FkKEV2lTbnUAPCC32QcfZvzNm3h4YGFHJFI9cGJIE9t+/KODu6XnIKYXzMOF+BhCSjfRx66uXZ4DURu/7hIu6Z4KHycqB61K/6s"
+	11	
+	12	SET ESHostName="JDEDEVSVR"
+	13	SET ESInstanceName="ent_dev"
+	14	SET JDEAgentInstallPath="/u01/apps/jdedwards/agent"
+	15	
+	16	clearzombies %SVMHost% %SVMPort% %SVMUserID% %SVMPasswordEncrypted% %ESHostName% %ESInstanceName% %JDEAgentInstallPath%
+	17	
+	18	SET ESHostName="JDEPRDSVR"
+	19	SET ESInstanceName="ent_prd"
+	20	SET JDEAgentInstallPath="/u01/apps/jdedwards/agent"
+	21	
+	22	clearzombies %SVMHost% %SVMPort% %SVMUserID% %SVMPasswordEncrypted% %ESHostName% %ESInstanceName% %JDEAgentInstallPath%
+	
+Save this code in a file with .bat extension and schedule it in task scheduler to automate clearing of zombies in your JD Edwards setup.
+
+I have tested this tool with latest server manager releases and it works fine. Please add comments in case you face any issues or to report bugs with the tool. If you would like to have something customized for your project in a similar manner, please use contact form to reach me and I will get back to you. 
+
+www.tbrabay.com
