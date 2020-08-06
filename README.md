@@ -96,4 +96,4 @@ Save this code in a file with .bat extension and schedule it in task scheduler t
 
 I have tested this tool with latest server manager releases and it works fine. Please add comments in case you face any issues or to report bugs with the tool. If you would like to have something customized for your project in a similar manner, please use contact form to reach me and I will get back to you. 
 
-www.timsoft-dz.ml
+https://timsoftdz.blogspot.com/
